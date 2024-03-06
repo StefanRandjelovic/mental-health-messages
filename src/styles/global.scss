@@ -19,28 +19,108 @@ body {
 #root {
   display: flex;
   justify-content: center;
+  width: 80%;
 }
 
-.saying-container {
-  background-color: red;
+nav {
+  position: fixed;
   display: flex;
-  flex-direction: column;
-  gap: 15px;
+  top: 20px;
+  width: 80%;
+  justify-content: space-around;
   align-items: center;
-  color: white;
-  padding: 20px;
+
+  img:first-child {
+    transition: all 0.25s ease-out;
+
+    &:hover {
+      filter: invert(66%) sepia(21%) saturate(4734%) hue-rotate(1deg)
+        brightness(104%) contrast(104%);
+      cursor: pointer;
+    }
+  }
+
+  .right-side {
+    display: flex;
+    flex-direction: row-reverse;
+    gap: 10px;
+    align-items: center;
+
+    p {
+      transition: all 0.25s ease-out;
+
+      &:hover {
+        cursor: pointer;
+        color: cyan;
+      }
+    }
+
+    button {
+      all: unset;
+      display: flex;
+      align-items: center;
+
+      img {
+        transform: rotate(180deg) scale(0.5) translateY(50px);
+        opacity: 0;
+        transition: all 0.25s ease-out;
+      }
+
+      &:hover {
+        cursor: pointer;
+      }
+      &:hover img {
+        opacity: 1;
+        transform: rotate(180deg) scale(0.5) translateY(-5px);
+        cursor: pointer;
+      }
+    }
+  }
+}
+.sayings-wrapper {
+  display: flex;
+  background-color: red;
   border-radius: 10px;
+  width: 80%;
+  padding: 0 20px;
   animation-name: saying;
   animation-duration: 15s;
   animation-timing-function: ease-out;
-  width: 80%;
-  text-align: center;
+
+  #back {
+    transform: rotate(-90deg);
+
+    &:hover {
+      transform: rotate(-90deg) scale(1.1);
+      cursor: pointer;
+    }
+  }
+
+  #forward {
+    transform: rotate(90deg);
+
+    &:hover {
+      transform: rotate(90deg) scale(1.1);
+      cursor: pointer;
+    }
+  }
 }
 
 .zig {
   animation-name: author;
   animation-duration: 15s;
   animation-timing-function: ease-out;
+}
+
+.saying-container {
+  display: flex;
+  flex-direction: column;
+  gap: 15px;
+  align-items: center;
+  color: white;
+  padding: 20px;
+  text-align: center;
+  text-wrap: wrap;
 }
 
 // ANIMATION
