@@ -15,6 +15,7 @@ export default defineConfig({
         replacement: "/src/styles",
       },
       { find: "@helpers", replacement: "/src/helpers" },
+      { find: "@images", replacement: "/src/images" },
     ],
   },
 });
