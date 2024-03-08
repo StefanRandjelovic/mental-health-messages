@@ -1,8 +1,12 @@
 // SAYINGS ARRAY
-import { informationsArrayEng } from "@info/informations-array.js";
+import {
+  informationsArrayEng,
+  informationsArraySrb,
+} from "@info/informations-array.js";
 
 // STYLES
 import "@styles/global.scss";
+import "@styles/media-queries.scss";
 
 // DEV DEPENDENCIES
 import { useState, useEffect } from "react";
@@ -16,13 +20,22 @@ function App() {
   let [iterator, setIterator] = useState(0);
   const [darkMode, setDarkMode] = useState(false);
   const [fontModal, setFontModal] = useState(false);
-  const [fontName, setFontName] = useState("Change font");
+  const [fontName, setFontName] = useState("Roboto Slab");
+  const [languageChange, setLanguageChange] = useState(true);
 
   const handleBackward = () => {
     if (iterator > 0) {
       setIterator(iterator - 1);
     } else {
       setIterator(informationsArrayEng.length - 1);
+    }
+    if (document.querySelector(".sayings-wrapper").classList.contains("zig")) {
+      document.querySelector(".sayings-wrapper").classList.remove("zig");
+    } else {
+      document.querySelector(".sayings-wrapper").classList.add("zig");
+      setTimeout(() => {
+        document.querySelector(".sayings-wrapper").classList.remove("zig");
+      }, 5000);
     }
 
     console.log(iterator);
@@ -34,31 +47,53 @@ function App() {
     } else {
       setIterator(0);
     }
+    if (document.querySelector(".sayings-wrapper").classList.contains("zig")) {
+      document.querySelector(".sayings-wrapper").classList.remove("zig");
+    } else {
+      document.querySelector(".sayings-wrapper").classList.add("zig");
+      setTimeout(() => {
+        document.querySelector(".sayings-wrapper").classList.remove("zig");
+      }, 5000);
+    }
 
     console.log(iterator);
   };
 
   const handleSelection = (event) => {
-    event.preventDefault();
-    if (event.target.innerHTML == "Default") {
-      document.documentElement.style.fontFamily =
-        "system-ui, -apple-system, BlinkMacSystemFont, Segoe UI, Roboto, Oxygen, Ubuntu, Cantarell, Open Sans Helvetica Neue, sans-serif";
-      setFontName("Default");
+    event.stopPropagation();
+    if (
+      event.target.innerHTML == "Roboto slab" ||
+      event.target.innerHTML == "Робото плочаст"
+    ) {
+      document.documentElement.style.fontFamily = "Roboto Slab, serif";
+      document.documentElement.style.fontWeight = "700";
+      languageChange
+        ? setFontName("Roboto Slab")
+        : setFontName("Робото плочаст");
       setFontModal(false);
     }
-    if (event.target.innerHTML == "Lobster") {
+    if (
+      event.target.innerHTML == "Lobster" ||
+      event.target.innerHTML == "Лобстер"
+    ) {
       document.documentElement.style.fontFamily = "Lobster, sans-serif";
-      setFontName("Lobster");
+      languageChange ? setFontName("Lobster") : setFontName("Лобстер");
       setFontModal(false);
     }
-    if (event.target.innerHTML == "Pacifico") {
+    if (
+      event.target.innerHTML == "Pacifico" ||
+      event.target.innerHTML == "Пацифико"
+    ) {
       document.documentElement.style.fontFamily = "Pacifico, cursive";
-      setFontName("Pacifico");
+      languageChange ? setFontName("Pacifico") : setFontName("Пацифико");
       setFontModal(false);
     }
-    if (event.target.innerHTML == "Play") {
-      document.documentElement.style.fontFamily = "Play, sans-serif";
-      setFontName("Play");
+    if (
+      event.target.innerHTML == "EB Garamond" ||
+      event.target.innerHTML == "ЕБ Гарамонд"
+    ) {
+      document.documentElement.style.fontFamily = "EB Garamond, serif";
+      languageChange ? setFontName("EB Garamond") : setFontName("ЕБ Гарамонд");
       setFontModal(false);
     }
   };
@@ -77,71 +112,150 @@ function App() {
     return () => clearInterval(interval);
   }, [iterator]);
 
+  useEffect(() => {
+    if (!languageChange && fontName == "Roboto Slab") {
+      setFontName("Робото плочаст");
+    } else if (languageChange && fontName == "Робото плочаст") {
+      setFontName("Roboto Slab");
+    }
+
+    if (!languageChange && fontName == "Pacifico") {
+      setFontName("Пацифико");
+    } else if (languageChange && fontName == "Пацифико") {
+      setFontName("Pacifico");
+    }
+
+    if (!languageChange && fontName == "Lobster") {
+      setFontName("Лобстер");
+    } else if (languageChange && fontName == "Лобстер") {
+      setFontName("Lobster");
+    }
+
+    if (!languageChange && fontName == "EB Garamond") {
+      setFontName("ЕБ Гарамонд");
+    } else if (languageChange && fontName == "ЕБ Гарамонд") {
+      setFontName("EB Garamond");
+    }
+  }, [languageChange]);
+
   console.log(iterator);
 
-  return (
-    <main>
-      <nav>
-        <img
-          src={darkMode ? Sun : Moon}
-          alt="Toggle dark mode"
-          onClick={() => setDarkMode(!darkMode)}
-        />
-        <div className="right-side">
-          <p>Eng</p>
-          <p>Srb</p>
-          <div className="button-modal">
-            <button onClick={() => setFontModal(!fontModal)}>
-              Change font current: {fontName} <img src={Chevron} />
-            </button>
+  document.body.addEventListener("click", () => setFontModal(false));
 
-            {fontModal && (
-              <div className="modal" onClick={handleSelection}>
-                <ul>
-                  <li
-                    style={{
-                      fontFamily:
-                        "system-ui, -apple-system, BlinkMacSystemFont, Segoe UI, Roboto, Oxygen, Ubuntu, Cantarell, Open Sans Helvetica Neue, sans-serif",
-                    }}
-                  >
-                    Default
-                  </li>
-                  <li
-                    style={{
-                      fontFamily: "Lobster, sans-serif",
-                    }}
-                  >
-                    Lobster
-                  </li>
-                  <li
-                    style={{
-                      fontFamily: "Pacifico, cursive",
-                    }}
-                  >
-                    Pacifico
-                  </li>
-                  <li
-                    style={{
-                      fontFamily: "Play, sans-serif",
-                    }}
-                  >
-                    Play
-                  </li>
-                </ul>
-              </div>
-            )}
+  useEffect(() => {
+    if (darkMode) {
+      document.body.style.backgroundColor = "black";
+    } else {
+      document.body.style.backgroundColor = "white";
+    }
+  }, [darkMode]);
+
+  return (
+    <>
+      {/* Document wrapper */}
+      <main>
+        {/* Nav component */}
+        <nav className={darkMode ? "navDark" : null}>
+          <img
+            src={darkMode ? Sun : Moon}
+            alt="Toggle dark mode"
+            onClick={() => setDarkMode(!darkMode)}
+          />
+          <div className="right-side">
+            <p
+              onClick={(event) => {
+                event.stopPropagation();
+                setLanguageChange(true);
+              }}
+            >
+              {languageChange ? "Eng" : "Енг"}
+            </p>
+            <p
+              onClick={(event) => {
+                event.stopPropagation();
+                setLanguageChange(false);
+              }}
+            >
+              {languageChange ? "Srb" : "Срп"}
+            </p>
+            <div className="button-modal">
+              <button
+                onClick={(event) => {
+                  event.stopPropagation();
+                  setFontModal(!fontModal);
+                }}
+              >
+                {languageChange
+                  ? "Change font, current"
+                  : "Промени фонт, тренутни"}
+                : {fontName} <img src={Chevron} />
+              </button>
+
+              {fontModal && (
+                <div
+                  className={darkMode ? "modal dark" : "modal"}
+                  onClick={handleSelection}
+                >
+                  <ul>
+                    <li
+                      style={{
+                        fontFamily: "Roboto Slab, serif",
+                      }}
+                    >
+                      {languageChange ? "Roboto slab" : "Робото плочаст"}
+                    </li>
+                    <li
+                      style={{
+                        fontFamily: "Lobster, sans-serif",
+                      }}
+                    >
+                      {languageChange ? "Lobster" : "Лобстер"}
+                    </li>
+                    <li
+                      style={{
+                        fontFamily: "Pacifico, cursive",
+                      }}
+                    >
+                      {languageChange ? "Pacifico" : "Пацифико"}
+                    </li>
+                    <li
+                      style={{
+                        fontFamily: "EB Garamond, serif",
+                      }}
+                    >
+                      {languageChange ? "EB Garamond" : "ЕБ Гарамонд"}
+                    </li>
+                  </ul>
+                </div>
+              )}
+            </div>
           </div>
+        </nav>
+
+        {/* Red sayings component */}
+        <div className={darkMode ? "sayings-wrapper dark" : "sayings-wrapper"}>
+          <img
+            src={Chevron}
+            alt="Previous"
+            id="back"
+            onClick={handleBackward}
+          />
+          <div className="saying-container">
+            <p id="saying">
+              {languageChange
+                ? `"${informationsArrayEng[iterator]?.saying}"`
+                : `"${informationsArraySrb[iterator]?.izreka}"`}
+            </p>
+            <p id="author">
+              {languageChange
+                ? `- ${informationsArrayEng[iterator]?.author}`
+                : `- ${informationsArraySrb[iterator]?.autor}"`}
+            </p>
+          </div>
+          <img src={Chevron} alt="Next" id="forward" onClick={handleForward} />
         </div>
-      </nav>
-      <div className="sayings-wrapper">
-        <img src={Chevron} alt="Previous" id="back" onClick={handleBackward} />
-        <div className="saying-container">
-          <p id="saying">{`"${informationsArrayEng[iterator]?.saying}"`}</p>
-          <p id="author">{`- ${informationsArrayEng[iterator]?.author}`}</p>
-        </div>
-        <img src={Chevron} alt="Next" id="forward" onClick={handleForward} />
-      </div>
-    </main>
+      </main>
+    </>
   );
 }
 
