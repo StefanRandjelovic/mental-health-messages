@@ -1,0 +1,56 @@
+@media only screen and (max-width: 700px) {
+  html {
+    font-size: 20px;
+  }
+  nav img:first-child {
+    width: 35px;
+    height: 35px;
+  }
+
+  .sayings-wrapper {
+    border-radius: 15px;
+  }
+  .sayings-wrapper #back,
+  .sayings-wrapper #forward {
+    width: 35px;
+    height: 35px;
+  }
+}
+
+@media only screen and (min-width: 1024px) {
+  html {
+    font-size: 35px;
+  }
+  nav img:first-child {
+    width: 70px;
+    height: 70px;
+  }
+
+  .sayings-wrapper {
+    border-radius: 25px;
+  }
+  .sayings-wrapper #back,
+  .sayings-wrapper #forward {
+    width: 70px;
+    height: 70px;
+  }
+}
+
+@media only screen and (min-width: 1440px) {
+  html {
+    font-size: 50px;
+  }
+  nav img:first-child {
+    width: 80px;
+    height: 80px;
+  }
+
+  .sayings-wrapper {
+    border-radius: 25px;
+  }
+  .sayings-wrapper #back,
+  .sayings-wrapper #forward {
+    width: 80px;
+    height: 80px;
+  }
+}
